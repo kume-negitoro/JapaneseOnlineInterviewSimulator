@@ -6,39 +6,68 @@ using UnityEngine.UI;
 public class InterviewSceneManager : MonoBehaviour
 {
     [SerializeField]
-    protected Text text;
+    protected GameObject text;
 
     [SerializeField]
-    protected List<string> messages = new List<string>();
-    protected int messagePtr = 0;
+    protected List<ScriptCommand> commands = new List<ScriptCommand>();
+    protected int commandPtr = 0;
+
+    [SerializeField]
+    protected GameObject dummyAccess;
 
     // Start is called before the first frame update
     void Start()
     {
-        messages.Add( "本日は株式会社一般の面接にお越しいただきましてありがとうございます。");
-        messages.Add("面接を担当いたします、人事の「大鳥こはく」と申します。");
+        commands.Add(new Message("本日は株式会社一般の面接にお越しいただきましてありがとうございます。"));
+        commands.Add(new Message("面接を担当いたします、人事の「大鳥こはく」と申します。"));
+        commands.Add(new Message("でははじめに、自己紹介をお願いします。"));
 
-        StartCoroutine("Message");
+        StartCoroutine(Message());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.anyKeyDown) Debug.Log(Input.anyKeyDown);
+        
     }
 
     IEnumerator Message()
     {
-        if(messagePtr >= messages.Count)
+        while(true)
         {
-            Debug.Log("coroutine break");
-            yield break;
+            // Commandが全部終わったら終了
+            if(commandPtr >= commands.Count)
+            {
+                Debug.Log("[Script End]");
+                yield break;
+            }
+
+            ScriptCommand command = commands[commandPtr];
+            Action action = command.action;
+            string value = command.value;
+            Debug.Log(value);
+
+            // CommandのActionの種類で判別してコルーチンを実行
+            switch(action){
+                case Action.Message:
+                    yield return StartCoroutine(command.Execute(text));
+                    break;
+                case Action.Question:
+                    yield return StartCoroutine(command.Execute(dummyAccess));
+                    break;
+                case Action.Input:
+                    yield return StartCoroutine(command.Execute(dummyAccess));
+                    break;
+                default:
+                    yield return StartCoroutine(command.Execute(dummyAccess));
+                    break;
+            }
+            commandPtr++;
+
+            // 何かのキーを待つ
+            yield return new WaitUntil(() => Input.anyKeyDown);
+            // 二重に反応するのを防ぐため1フレーム待つ
+            yield return new WaitForEndOfFrame();
         }
-
-        Debug.Log(messages[messagePtr]);
-        text.text = messages[messagePtr];
-        messagePtr++;
-
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
     }
 }
