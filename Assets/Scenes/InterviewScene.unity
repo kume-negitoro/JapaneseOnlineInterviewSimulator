@@ -153,7 +153,6 @@ MonoBehaviour:
   text: {fileID: 859134025}
   audio: {fileID: 154658183}
   questionPanel: {fileID: 570522760}
-  dummyAccess: {fileID: 154658183}
 --- !u!4 &30332611
 Transform:
   m_ObjectHideFlags: 0
@@ -651,7 +650,7 @@ GameObject:
   - component: {fileID: 859134028}
   - component: {fileID: 859134027}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
