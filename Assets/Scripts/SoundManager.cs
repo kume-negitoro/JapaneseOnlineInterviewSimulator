@@ -52,7 +52,7 @@ public class SoundManager : MonoBehaviour
         {
             Debug.Log("audio not found");
         }
-        yield return new WaitUntil(() => audio.isPlaying);
+        yield return new WaitWhile(() => audio.isPlaying);
         yield return null;
     }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class QuestionData
+public class QuestionData
 {
     public string question;
     public List<string> answers;

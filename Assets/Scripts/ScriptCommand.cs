@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public enum Action
 {
+    Lazy,
     Message,
     Question,
     Input,
@@ -24,9 +25,25 @@ public class ScriptCommand
         this.value = value;
     }
 
-    public virtual IEnumerator Execute(GameObject target)
+    public virtual IEnumerator Execute(InterviewSceneManager manager)
     {
         yield return null;
+    }
+}
+
+public class Lazy<CommandType> : ScriptCommand
+    where CommandType : ScriptCommand
+{
+    public System.Func<CommandType> func;
+
+    public Lazy(System.Func<CommandType> func) : base(Action.Lazy, "Lazy")
+    {
+        this.func = func;
+    }
+
+    override public IEnumerator Execute(InterviewSceneManager manager)
+    {
+        yield return this.func().Execute(manager);
     }
 }
 
@@ -39,28 +56,33 @@ public class Message : ScriptCommand
         this.message = message;
     }
 
-    override public IEnumerator Execute(GameObject target)
+    override public IEnumerator Execute(InterviewSceneManager manager)
     {
-        this.target = target;
+        this.target = GameObject.Find("TextWindow");
         Text text = target.GetComponent<Text>();
         text.text = message;
+        // 何かのキーを待つ
+        yield return new WaitUntil(() => Input.anyKeyDown);
         yield return null;
     }
 }
 
 public class Question : ScriptCommand
 {
-    protected string question;
-    protected List<string> options;
+    protected QuestionData questionData;
     
-    public Question(string question, List<string> options) : base(Action.Question, question)
+    public Question(QuestionData data) : base(Action.Question, data.question)
     {
-        this.question = question;
-        this.options = options;
+        this.questionData = data;
     }
 
-    override public IEnumerator Execute(GameObject target)
+    override public IEnumerator Execute(InterviewSceneManager manager)
     {
+        this.target = manager.questionPanel;
+        QuestionController question = target.GetComponent<QuestionController>();
+        yield return question.CreateQuestion(this.questionData);
+        Debug.Log(questionData.userAnswer);
+        
         yield return null;
     }
 }
@@ -74,11 +96,11 @@ public class Audio : ScriptCommand
         this.source = source;
     }
 
-    override public IEnumerator Execute(GameObject target)
+    override public IEnumerator Execute(InterviewSceneManager manager)
     {
-        this.target = target;
-        SoundManager manager = target.GetComponent<SoundManager>();
-        yield return manager.PlaySE(source);
+        this.target = GameObject.Find("Main Camera");;
+        SoundManager sm = target.GetComponent<SoundManager>();
+        yield return sm.PlaySE(source);
     }
 }
 
@@ -91,11 +113,13 @@ public class Voice : ScriptCommand
         this.source = source;
     }
 
-    override public IEnumerator Execute(GameObject target)
+    override public IEnumerator Execute(InterviewSceneManager manager)
     {
-        Debug.Log("execute voice");
-        this.target = target;
-        SoundManager manager = target.GetComponent<SoundManager>();
-        yield return manager.PlayVoice(source);
+        this.target = GameObject.Find("Main Camera");
+        SoundManager sm = target.GetComponent<SoundManager>();
+        yield return sm.PlayVoice(source);
+        // 何かのキーを待つ
+        yield return new WaitUntil(() => Input.anyKeyDown);
+        yield return null;
     }
 }

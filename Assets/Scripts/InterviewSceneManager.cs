@@ -9,21 +9,38 @@ public class InterviewSceneManager : MonoBehaviour
     protected GameObject text;
     [SerializeField]
     protected GameObject audio;
+    [SerializeField]
+    public GameObject questionPanel;
 
     [SerializeField]
     protected List<ScriptCommand> commands = new List<ScriptCommand>();
     protected int commandPtr = 0;
 
-    [SerializeField]
-    protected GameObject dummyAccess;
+    // [SerializeField]
+    // protected GameObject dummyAccess;
 
     // Start is called before the first frame update
     void Start()
     {
+        QuestionData firstQuestion = new QuestionData(
+            "あなたの名前は？",
+            new List<string>() {
+                "大鳥こはく",
+                "山田たろう"
+            }
+        );
+
         commands.Add(new Message("本日は株式会社一般の面接にお越しいただきましてありがとうございます。"));
-        commands.Add(new Voice("test"));
+        // commands.Add(new Voice("test"));
         commands.Add(new Message("面接を担当いたします、人事の「大鳥こはく」と申します。"));
         commands.Add(new Message("でははじめに、自己紹介をお願いします。"));
+        commands.Add(new Question(firstQuestion));
+        commands.Add(new Lazy<Message>(() => {
+            if(firstQuestion.userAnswer == 1)
+                return new Message("はい、ありがとうございます。");
+            else
+                return new Message("名前もちゃんと言えないんですね。");
+        }));
 
         StartCoroutine(Message());
     }
@@ -50,31 +67,9 @@ public class InterviewSceneManager : MonoBehaviour
             string value = command.value;
             Debug.Log(value);
 
-            // CommandのActionの種類で判別してコルーチンを実行
-            switch(action){
-                case Action.Message:
-                    yield return StartCoroutine(command.Execute(text));
-                    break;
-                case Action.Question:
-                    yield return StartCoroutine(command.Execute(dummyAccess));
-                    break;
-                case Action.Input:
-                    yield return StartCoroutine(command.Execute(dummyAccess));
-                    break;
-                case Action.Audio:
-                    yield return StartCoroutine(command.Execute(audio));
-                    break;
-                case Action.Voice:
-                    yield return StartCoroutine(command.Execute(audio));
-                    break;
-                default:
-                    yield return StartCoroutine(command.Execute(dummyAccess));
-                    break;
-            }
+            yield return StartCoroutine(command.Execute(this));
             commandPtr++;
 
-            // 何かのキーを待つ
-            yield return new WaitUntil(() => Input.anyKeyDown);
             // 二重に反応するのを防ぐため1フレーム待つ
             yield return new WaitForEndOfFrame();
         }
