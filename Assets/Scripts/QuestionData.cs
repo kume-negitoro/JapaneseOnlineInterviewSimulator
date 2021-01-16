@@ -20,7 +20,6 @@ public class QuestionData
     {
         this.userAnswer = answer;
     }
-
     public List<string> getAnswers()
     {
         return this.answers;
