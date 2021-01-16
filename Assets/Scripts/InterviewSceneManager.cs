@@ -27,6 +27,10 @@ public class InterviewSceneManager : MonoBehaviour
             new List<string>() {
                 "大鳥こはく",
                 "山田たろう"
+            },
+            new List<int>() {
+                0,
+                100,
             }
         );
 
