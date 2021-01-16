@@ -8,6 +8,8 @@ public enum Action
     Message,
     Question,
     Input,
+    Audio,
+    Voice,
 }
 
 public class ScriptCommand
@@ -57,7 +59,43 @@ public class Question : ScriptCommand
         this.options = options;
     }
 
-    public IEnumerator Execute(){
+    override public IEnumerator Execute(GameObject target)
+    {
         yield return null;
+    }
+}
+
+public class Audio : ScriptCommand
+{
+    protected string source;
+    
+    public Audio(string source) : base(Action.Audio, source)
+    {
+        this.source = source;
+    }
+
+    override public IEnumerator Execute(GameObject target)
+    {
+        this.target = target;
+        SoundManager manager = target.GetComponent<SoundManager>();
+        yield return manager.PlaySE(source);
+    }
+}
+
+public class Voice : ScriptCommand
+{
+    protected string source;
+    
+    public Voice(string source) : base(Action.Voice, source)
+    {
+        this.source = source;
+    }
+
+    override public IEnumerator Execute(GameObject target)
+    {
+        Debug.Log("execute voice");
+        this.target = target;
+        SoundManager manager = target.GetComponent<SoundManager>();
+        yield return manager.PlayVoice(source);
     }
 }

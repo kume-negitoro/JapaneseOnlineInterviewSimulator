@@ -7,6 +7,8 @@ public class InterviewSceneManager : MonoBehaviour
 {
     [SerializeField]
     protected GameObject text;
+    [SerializeField]
+    protected GameObject audio;
 
     [SerializeField]
     protected List<ScriptCommand> commands = new List<ScriptCommand>();
@@ -19,6 +21,7 @@ public class InterviewSceneManager : MonoBehaviour
     void Start()
     {
         commands.Add(new Message("本日は株式会社一般の面接にお越しいただきましてありがとうございます。"));
+        commands.Add(new Voice("test"));
         commands.Add(new Message("面接を担当いたします、人事の「大鳥こはく」と申します。"));
         commands.Add(new Message("でははじめに、自己紹介をお願いします。"));
 
@@ -57,6 +60,12 @@ public class InterviewSceneManager : MonoBehaviour
                     break;
                 case Action.Input:
                     yield return StartCoroutine(command.Execute(dummyAccess));
+                    break;
+                case Action.Audio:
+                    yield return StartCoroutine(command.Execute(audio));
+                    break;
+                case Action.Voice:
+                    yield return StartCoroutine(command.Execute(audio));
                     break;
                 default:
                     yield return StartCoroutine(command.Execute(dummyAccess));
