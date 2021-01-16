@@ -2,20 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class Question
+public class QuestionData
 {
     public string question;
     public List<string> answers;
+    public List<int> answerScores;
     public int userAnswer;
 
-    public Question(string question, List<string> answers)
+    public QuestionData(string question, List<string> answers, List<int> answerScores)
     {
         this.question = question;
         this.answers = answers;
+        this.answerScores = answerScores;
     }
 
-    public select(int answer)
+    public void select(int answer)
     {
         this.userAnswer = answer;
+    }
+
+    public List<string> getAnswers()
+    {
+        return this.answers;
     }
 }
