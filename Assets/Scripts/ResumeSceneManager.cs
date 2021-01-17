@@ -16,6 +16,8 @@ public class ResumeSceneManager : MonoBehaviour
 
     void Start()
     {
+        Screen.SetResolution(1280, 720, false, 60);
+
         LoadButton.onClick.AddListener(OnClickButton);
         List<string> motivationList = new List<string>(){ "", "実家に近いから", "福利厚生がしっかりしてるから" };
         List<string> appealList = new List<string>() { "", "粘り強さ", "真面目" };

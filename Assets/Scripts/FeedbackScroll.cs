@@ -10,20 +10,21 @@ public class FeedbackScroll : MonoBehaviour
     public float totalTime;
     public Vector2 initPosition;
     public Vector2 finPosition;
+    RectTransform rect;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        rect = this.transform as RectTransform;
     }
     // Update is called once per frame
     void Update()
     {
-        if(elapsedTime < totalTime)
+        if (elapsedTime < totalTime)
         {
             elapsedTime += Time.deltaTime;
             Vector2 pos = easeOutQuart(elapsedTime, totalTime, initPosition, finPosition);
-            this.transform.position = pos;
+            rect.anchoredPosition = pos;
         }
     }
     public void startTrans(Vector2 init, Vector2 fin)

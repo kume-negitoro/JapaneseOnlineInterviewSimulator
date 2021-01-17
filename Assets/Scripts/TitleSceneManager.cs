@@ -10,6 +10,8 @@ public class TitleSceneManager : MonoBehaviour
     public Button LoadButton;
     void Start()
     {
+        Screen.SetResolution(1280, 720, false, 60);
+
         Debug.Log("あなたの名前は" + GameStatus.playerName + "です");
         Debug.Log("あなたの年齢は" + GameStatus.playerAge + "です");
         LoadButton.onClick.AddListener(OnClickButton);

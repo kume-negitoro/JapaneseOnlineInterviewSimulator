@@ -23,6 +23,8 @@ public class InterviewSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Screen.SetResolution(1280, 720, false, 60);
+
         QuestionData firstQuestion = new QuestionData(
             "あなたの名前は？",
             new List<string>() {
