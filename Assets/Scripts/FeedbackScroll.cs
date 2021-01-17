@@ -24,7 +24,14 @@ public class FeedbackScroll : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             Vector2 pos = easeOutQuart(elapsedTime, totalTime, initPosition, finPosition);
-            rect.anchoredPosition = pos;
+            if(rect != null)
+            {
+                rect.anchoredPosition = pos;
+            }
+            else
+            {
+                this.transform.position = pos;
+            }
         }
     }
     public void startTrans(Vector2 init, Vector2 fin)

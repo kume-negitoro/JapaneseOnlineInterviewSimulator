@@ -34,6 +34,10 @@ public class InterviewSceneManager : MonoBehaviour
             new List<int>() {
                 0,
                 100,
+            },
+            new List<string>() {
+                "正しい名前を答えましょう。",
+                "正解です、正しい名前を答えましょう。"
             }
         );
 
