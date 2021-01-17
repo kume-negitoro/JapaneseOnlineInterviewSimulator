@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityChan;
 
 public enum Action
 {
@@ -11,6 +12,7 @@ public enum Action
     Input,
     Audio,
     Voice,
+    Face,
 }
 
 public class ScriptCommand
@@ -125,5 +127,30 @@ public class Voice : ScriptCommand
         // 何かのキーを待つ
         yield return new WaitUntil(() => Input.anyKeyDown);
         yield return null;
+    }
+}
+
+public class Face : ScriptCommand
+{
+    protected string face;
+    
+    public Face(string face) : base(Action.Face, face)
+    {
+        this.face = face;
+    }
+
+    override public IEnumerator Execute(InterviewSceneManager manager)
+    {
+        this.target = GameObject.Find("unitychan");
+        FaceUpdate2 fu = target.GetComponent<FaceUpdate2>();
+        fu.OnCallChangeFace(this.face);
+        yield return null;
+    }
+
+    public static Face ByKey(string key)
+    {
+        int score = GameStatus.questionDic[key].GetScore();
+        if(score >= 50) return new Face("default@unitychan");
+        return new Face("MTH_I");
     }
 }

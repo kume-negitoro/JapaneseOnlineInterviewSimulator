@@ -28,6 +28,11 @@ public class QuestionData
         return this.answers[this.userAnswer];
     }
 
+    public int GetScore()
+    {
+        return this.answerScores[this.userAnswer];
+    }
+
     public void select(int answer)
     {
         this.userAnswer = answer;
