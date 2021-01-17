@@ -8,7 +8,7 @@ namespace UnityChan
 		public AnimationClip[] animations;
 		Animator anim;
 		public float delayWeight;
-		public bool isKeepFace = false;
+		public bool isKeepFace = true;
 
 		void Start ()
 		{

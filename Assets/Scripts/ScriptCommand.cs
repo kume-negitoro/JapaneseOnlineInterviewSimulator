@@ -147,10 +147,13 @@ public class Face : ScriptCommand
         yield return null;
     }
 
-    public static Face ByKey(string key)
+    public static Lazy<Face> ByKey(string key)
     {
-        int score = GameStatus.questionDic[key].GetScore();
-        if(score >= 50) return new Face("default@unitychan");
-        return new Face("MTH_I");
+        return new Lazy<Face>(() => {
+            int score = GameStatus.questionDic[key].GetScore();
+            Debug.Log(score);
+            if(score >= 50) return new Face("default@unitychan");
+            return new Face("MTH_I");
+        });
     }
 }

@@ -5,6 +5,10 @@ using System.Text.RegularExpressions;
 
 public static class GameStatus
 {
+    // バーチャル背景のオン
+    public static bool vBackEnabled = false;
+    // SNS通知のオン
+    public static bool snsNotifyEnabled = true;
     //名前
     public static string playerName = "名無し";
     //年齢

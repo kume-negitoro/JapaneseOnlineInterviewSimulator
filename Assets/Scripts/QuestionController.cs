@@ -61,6 +61,7 @@ public class QuestionController : MonoBehaviour
         }
 
         question.select(answer);
+        GameStatus.score += question.GetScore();
 
         yield return null;
     }
