@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class InterviewSceneManager : MonoBehaviour
 {
@@ -66,6 +67,9 @@ public class InterviewSceneManager : MonoBehaviour
             if(commandPtr >= commands.Count)
             {
                 Debug.Log("[Script End]");
+
+                SceneManager.LoadScene("ResultScene");
+                
                 yield break;
             }
 
