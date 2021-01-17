@@ -2755,6 +2755,7 @@ GameObject:
   - component: {fileID: 1436865143}
   - component: {fileID: 1436865142}
   - component: {fileID: 1436865144}
+  - component: {fileID: 1436865145}
   m_Layer: 0
   m_Name: ResumeManager
   m_TagString: Untagged
@@ -2843,6 +2844,18 @@ MonoBehaviour:
   MotivationDD: {fileID: 1387643039}
   AppealDD: {fileID: 1755724396}
   ErrorText: {fileID: 624682348}
+--- !u!114 &1436865145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436865141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a8ca5182db4dbceb99eb73090054863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1442602903
 GameObject:
   m_ObjectHideFlags: 0
