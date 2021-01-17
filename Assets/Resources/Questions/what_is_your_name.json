@@ -1,6 +1,6 @@
 {
     "question": "あなたの名前を教えてください",
-    "answers": ["大鳥こはく", "$playerName"],
+    "answers": ["大鳥こはく", "${playerName}"],
     "answerScores": [0, 100],
     "answerFeedbacks": ["面接官の名前です。", "正解です。"]
 }

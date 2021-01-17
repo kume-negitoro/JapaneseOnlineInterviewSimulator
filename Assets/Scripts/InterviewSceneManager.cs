@@ -46,7 +46,8 @@ public class InterviewSceneManager : MonoBehaviour
                 return new Message("名前もちゃんと言えないんですね。");
         }));
         commands.Add(new Message("では次の質問です。"));
-        commands.Add(new Question(GameStatus.questionDic["what_is_your_name"]));
+        commands.Add(Question.ByKey("what_is_your_name"));
+        commands.Add(new Message("なるほど、${what_is_your_name}なんですね？"));
 
         StartCoroutine(Message());
     }
