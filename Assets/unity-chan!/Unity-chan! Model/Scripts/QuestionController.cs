@@ -30,7 +30,8 @@ public class QuestionController : MonoBehaviour
         {
             if(i < question.answers.Count)
             {
-                options[i].GetComponentInChildren<Text>().text = question.answers[i];
+                Text text = options[i].GetComponentInChildren<Text>();
+                text.text = GameStatus.BindVars(question.answers[i]);
             }
             else
             {

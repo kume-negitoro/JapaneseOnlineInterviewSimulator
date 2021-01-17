@@ -60,7 +60,7 @@ public class Message : ScriptCommand
     {
         this.target = GameObject.Find("TextWindow");
         Text text = target.GetComponent<Text>();
-        text.text = message;
+        text.text = GameStatus.BindVars(message);
         // 何かのキーを待つ
         yield return new WaitUntil(() => Input.anyKeyDown);
         yield return null;
@@ -84,6 +84,10 @@ public class Question : ScriptCommand
         Debug.Log(questionData.userAnswer);
         
         yield return null;
+    }
+    public static Question ByKey(string key)
+    {
+        return new Question(GameStatus.questionDic[key]);
     }
 }
 
