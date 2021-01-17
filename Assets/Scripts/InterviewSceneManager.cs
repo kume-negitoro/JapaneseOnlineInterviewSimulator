@@ -47,8 +47,8 @@ public class InterviewSceneManager : MonoBehaviour
                 return new Message("名前もちゃんと言えないんですね。");
         }));
         commands.Add(new Message("では次の質問です。"));
-        commands.Add(Question.ByKey("what_is_your_name"));
-        commands.Add(new Message("なるほど、${what_is_your_name}なんですね？"));
+        commands.Add(new Message("${you_have_dark_personality}"));
+        commands.Add(Question.ByKey("you_have_dark_personality"));
 
         StartCoroutine(Message());
     }
@@ -69,7 +69,7 @@ public class InterviewSceneManager : MonoBehaviour
                 Debug.Log("[Script End]");
 
                 SceneManager.LoadScene("ResultScene");
-                
+
                 yield break;
             }
 

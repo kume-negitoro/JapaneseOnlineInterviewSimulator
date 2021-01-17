@@ -28,31 +28,51 @@ public static class GameStatus
     {
         return Regex.Replace(text, @"(\${.+?})", new MatchEvaluator(
             match => {
-                string varName = Regex.Match(match.Value, @"\${(.+?)}").Groups[1].Value;
-                Debug.Log(varName);
-                switch(match.Value)
+                string target = Regex.Match(match.Value, @"\${(.+?)}").Groups[1].Value;
+                Debug.Log(target);
+                string[] attrs = target.Split('/');
+                string qName = attrs[0];
+                string pName = attrs.Length == 2 ? attrs[1] : "";
+
+                switch(qName)
                 {
-                    case "${playerName}":
+                    case "playerName":
                         return GameStatus.playerName;
-                    case "${playerAge}":
+                    case "playerAge":
                         return "" + GameStatus.playerAge;
-                    case "${score}":
+                    case "score":
                         return "" + GameStatus.score;
-                    case "${companyName}":
+                    case "companyName":
                         return GameStatus.companyName;
-                    case "${pros}":
+                    case "pros":
                         return GameStatus.pros;
-                    case "${cons}":
+                    case "cons":
                         return GameStatus.cons;
-                    case "${motivation}":
+                    case "motivation":
                         return GameStatus.motivation;
-                    case "${appeal}":
+                    case "appeal":
                         return GameStatus.appeal;
                     default:
-                        if(GameStatus.questionDic.ContainsKey(varName))
-                            return GameStatus.BindVars(
-                                GameStatus.questionDic[varName].GetAnswer()
-                            );
+                        if(GameStatus.questionDic.ContainsKey(qName))
+                            switch(pName)
+                            {
+                                case "question":
+                                    return GameStatus.BindVars(
+                                        GameStatus.questionDic[qName].GetQuestion()
+                                    );
+                                case "answer":
+                                    return GameStatus.BindVars(
+                                        GameStatus.questionDic[qName].GetAnswer()
+                                    );
+                                // case "correct":
+                                //     return GameStatus.BindVars(
+                                //         GameStatus.questionDic[qName].GetCorrectAnswer()
+                                //     );
+                                default:
+                                    return GameStatus.BindVars(
+                                        GameStatus.questionDic[qName].GetQuestion()
+                                    );
+                            }
                         else
                             return match.Value;
                 }

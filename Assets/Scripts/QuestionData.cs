@@ -18,6 +18,11 @@ public class QuestionData
         this.answerScores = answerScores;
     }
 
+    public string GetQuestion()
+    {
+        return this.question;
+    }
+
     public string GetAnswer()
     {
         return this.answers[this.userAnswer];
