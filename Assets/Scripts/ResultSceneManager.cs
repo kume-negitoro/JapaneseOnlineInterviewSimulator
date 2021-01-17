@@ -19,6 +19,7 @@ public class ResultSceneManager : MonoBehaviour
 
     public int feedbackTotal;
     int pageNum;
+    float centerX = 450.0f, centerY = 260.0f, outsideY = 1123;
 
     List<string> feedbackText = new List<string>() { "1", "2" };
 
@@ -54,9 +55,9 @@ public class ResultSceneManager : MonoBehaviour
 
     public void OnClickFeedbackButton()
     {
-        Feedback1.GetComponent<FeedbackScroll>().startTrans(new Vector2(415.0f, -764.0f), new Vector2(415.0f, 259.5f));
-        ResultText.GetComponent<FeedbackScroll>().startTrans(new Vector2(415.0f, 302.0f), new Vector2(1000.0f, 302.0f));
-        FeedbackButton.GetComponent<FeedbackScroll>().startTrans(new Vector2(415.0f, 231.0f), new Vector2(1000.0f, 231.0f));
+        Feedback1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, -outsideY), new Vector2(centerX, centerY));
+        ResultText.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, centerY), new Vector2(1000.0f, centerY));
+        FeedbackButton.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, centerY), new Vector2(1000.0f, centerY));
         pageNum = 1;
         DownButton.interactable = true;
     }
@@ -66,15 +67,15 @@ public class ResultSceneManager : MonoBehaviour
         {
             if (pageNum % 2 == 0)
             {
-                Feedback1.GetComponent<FeedbackScroll>().startTrans(new Vector2(415.0f, 764.0f), new Vector2(415.0f, 259.5f));
-                Feedback2.GetComponent<FeedbackScroll>().startTrans(new Vector2(415.0f, 259.5f), new Vector2(415.0f, -764.0f));
+                Feedback1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, outsideY), new Vector2(centerX, centerY));
+                Feedback2.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, centerY), new Vector2(centerX, -outsideY));
                 DownButton.interactable = true;
                 pageNum--;
             }
             else
             {
-                Feedback1.GetComponent<FeedbackScroll>().startTrans(new Vector2(415.0f, 259.5f), new Vector2(415.0f, -764.0f));
-                Feedback2.GetComponent<FeedbackScroll>().startTrans(new Vector2(415.0f, 764.0f), new Vector2(415.0f, 259.5f));
+                Feedback1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, centerY), new Vector2(centerX, -outsideY));
+                Feedback2.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, outsideY), new Vector2(centerX, centerY));
                 DownButton.interactable = true;
                 pageNum--;
             }
@@ -92,15 +93,15 @@ public class ResultSceneManager : MonoBehaviour
             if (pageNum % 2 == 0)
             {
 
-                Feedback1.GetComponent<FeedbackScroll>().startTrans(new Vector2(415.0f, -764.0f), new Vector2(415.0f, 259.5f));
-                Feedback2.GetComponent<FeedbackScroll>().startTrans(new Vector2(415.0f, 259.5f), new Vector2(415.0f, 764.0f));
+                Feedback1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, -outsideY), new Vector2(centerX, centerY));
+                Feedback2.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, centerY), new Vector2(centerX, outsideY));
                 UpButton.interactable = true;
                 pageNum++;
             }
             else
             {
-                Feedback1.GetComponent<FeedbackScroll>().startTrans(new Vector2(415.0f, 259.5f), new Vector2(415.0f, 764.0f));
-                Feedback2.GetComponent<FeedbackScroll>().startTrans(new Vector2(415.0f, -764.0f), new Vector2(415.0f, 259.5f));
+                Feedback1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, centerY), new Vector2(centerX, outsideY));
+                Feedback2.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, -outsideY), new Vector2(centerX, centerY));
                 UpButton.interactable = true;
                 pageNum++;
             }
