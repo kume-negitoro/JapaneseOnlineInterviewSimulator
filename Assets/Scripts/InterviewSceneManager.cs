@@ -51,6 +51,8 @@ public class InterviewSceneManager : MonoBehaviour
         commands.Add(new Message("では次の質問です。"));
         commands.Add(new Message("${you_have_dark_personality}"));
         commands.Add(Question.ByKey("you_have_dark_personality"));
+        commands.Add(Face.ByKey("you_have_dark_personality"));
+        commands.Add(new Message(""));
 
         StartCoroutine(Message());
     }
