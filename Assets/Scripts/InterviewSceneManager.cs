@@ -41,31 +41,46 @@ public class InterviewSceneManager : MonoBehaviour
             }
         );
 
+        commands.Add(new Audio("honjitsu"));
         commands.Add(new Message("本日は株式会社一般の面接にお越しいただきましてありがとうございます。"));
+        commands.Add(new Audio("kohakudesu"));
         commands.Add(new Message("面接を担当いたします、人事の「大鳥こはく」と申します。"));
 
+        commands.Add(new Audio("jikosyoukai"));
         commands.Add(new Message("でははじめに、自己紹介をお願いします。"));
         commands.Add(Question.ByKey("what_is_your_name"));
         commands.Add(Face.ByKey("what_is_your_name"));
         commands.Add(new Lazy<Message>(() => {
             int score = GameStatus.questionDic["what_is_your_name"].GetScore();
             if(score >= 50)
+            {
+                new Audio("arigatou").Execute(this);
                 return new Message("はい、ありがとうございます。");
+            }
             else
+            {
+                new Audio("anatanomnamaedesu").Execute(this);
                 return new Message("えっと、あなたの名前を聞いているんですが...");
+            }
         }));
 
+        commands.Add(new Audio("did_you_sleep_well"));
         commands.Add(new Message("${did_you_sleep_well}"));
         commands.Add(Question.ByKey("did_you_sleep_well"));
+        commands.Add(new Audio("naruhodo"));
         commands.Add(new Message("なるほどですね"));
 
+        commands.Add(new Audio("tuginositumon"));
         commands.Add(new Message("では次の質問です。"));
 
+        commands.Add(new Audio("you_have_dark_personality"));
         commands.Add(new Message("${you_have_dark_personality}"));
         commands.Add(Question.ByKey("you_have_dark_personality"));
         commands.Add(Face.ByKey("you_have_dark_personality"));
+        commands.Add(new Audio("naruhodoarigatou"));
         commands.Add(new Message("なるほど、ありがとうございます。"));
 
+        commands.Add(new Audio("mensetuhaijoudesu"));
         commands.Add(new Message("では面接は以上になります。本日はありがとうございました。"));
 
         StartCoroutine(Message());

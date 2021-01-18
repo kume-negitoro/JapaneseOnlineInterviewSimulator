@@ -28,11 +28,16 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         clips = clipTable.GetTable();
         audio = GetComponent<AudioSource>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
     }
 
     // Update is called once per frame
@@ -61,6 +66,10 @@ public class SoundManager : MonoBehaviour
         if(clips.ContainsKey(sourceName))
         {
             audio.PlayOneShot(clips[sourceName]);
+        }
+        else
+        {
+            Debug.Log("audio not found");
         }
         yield return null;
     }
