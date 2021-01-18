@@ -2,5 +2,5 @@
     "question": "あなたの名前を教えてください",
     "answers": ["大鳥こはく", "${playerName}"],
     "answerScores": [0, 100],
-    "answerFeedback": ""
+    "answerFeedback": "落ち着いて回答しましょう。"
 }
