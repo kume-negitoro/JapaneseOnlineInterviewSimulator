@@ -44,7 +44,7 @@ public class ResultSceneManager : MonoBehaviour
         DownButton.interactable = false;
 
         userAverageScore = GameStatus.score / GameStatus.questionDic.Count;
-        if(GameStatus.score > passAverageScore)
+        if(userAverageScore > passAverageScore)
         {
             ResultText.text = "合格です";
             faile.SetActive(false);
@@ -78,17 +78,17 @@ public class ResultSceneManager : MonoBehaviour
         Panel1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, -outsideY), new Vector2(centerX, centerY));
         ResultText.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, 406), new Vector2(2000.0f, 406));
         FeedbackButton.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, 356), new Vector2(2000.0f, 356));
-        pageNum = 1;
-        PageNum.text = pageNum.ToString();
+        pageNum = 0;
+        PageNum.text = (pageNum+1).ToString();
         FeedbackText1.text = questionList[pageNum]+"\n"+userAnswerList[pageNum]+"\n"+feedbackList[pageNum];
         DownButton.interactable = true;
     }
     public void OnClickUpButton()
     {
-        if (pageNum > 1)
+        if (pageNum > 0)
         {
             pageNum--;
-            if (pageNum % 2 == 1)
+            if (pageNum % 2 == 0)
             {
                 Panel1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, outsideY), new Vector2(centerX, centerY));
                 Panel2.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, centerY), new Vector2(centerX, -outsideY));
@@ -101,10 +101,10 @@ public class ResultSceneManager : MonoBehaviour
                 FeedbackText2.text = questionList[pageNum] + "\n" + userAnswerList[pageNum] + "\n" + feedbackList[pageNum];
             }
             DownButton.interactable = true;
-            PageNum.text = pageNum.ToString();
+            PageNum.text = (pageNum+1).ToString();
 
         }
-        if (pageNum == 1)
+        if (pageNum == 0)
         {
             UpButton.interactable = false;
         }
@@ -114,7 +114,7 @@ public class ResultSceneManager : MonoBehaviour
         if (pageNum < feedbackTotal)
         {
             pageNum++;
-            if (pageNum % 2 == 1)
+            if (pageNum % 2 == 0)
             {
 
                 Panel1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, -outsideY), new Vector2(centerX, centerY));
@@ -128,9 +128,9 @@ public class ResultSceneManager : MonoBehaviour
                 FeedbackText2.text = questionList[pageNum] + "\n" + userAnswerList[pageNum] + "\n" + feedbackList[pageNum];
             }
             UpButton.interactable = true;
-            PageNum.text = pageNum.ToString();
+            PageNum.text = (pageNum+1).ToString();
         }
-        if(pageNum == feedbackTotal)
+        if(pageNum == feedbackTotal-1)
         {
             DownButton.interactable = false;
         }

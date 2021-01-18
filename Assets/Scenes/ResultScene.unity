@@ -895,7 +895,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 
 --- !u!222 &973673794
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1435,7 +1435,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 640, y: 406}
-  m_SizeDelta: {x: 120.56714, y: 50}
+  m_SizeDelta: {x: 160.08124, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1282054060
 MonoBehaviour:
@@ -1974,7 +1974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResultText: {fileID: 1282054060}
-  passAverageScore: 0
+  passAverageScore: 50
   Panel1: {fileID: 1917797687}
   Panel2: {fileID: 1146647197}
   FeedbackText1: {fileID: 2141032937}
@@ -1985,7 +1985,6 @@ MonoBehaviour:
   DownButton: {fileID: 1846499974}
   success: {fileID: 1272376598}
   faile: {fileID: 740090685}
-  feedbackTotal: 4
 --- !u!4 &1832211397
 Transform:
   m_ObjectHideFlags: 0
