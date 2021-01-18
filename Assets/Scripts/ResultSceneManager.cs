@@ -12,8 +12,10 @@ public class ResultSceneManager : MonoBehaviour
 
     public Image Panel1;
     public Image Panel2;
-    public Text FeedbackText1;
-    public Text FeedbackText2;
+    public Text FeedbackText1_1;
+    public Text FeedbackText1_2;
+    public Text FeedbackText2_1;
+    public Text FeedbackText2_2;
     public Text PageNum;
 
     public Button FeedbackButton;
@@ -61,7 +63,7 @@ public class ResultSceneManager : MonoBehaviour
         {
             questionList.Add(GameStatus.BindVars(data.GetQuestion()));
             userAnswerList.Add(GameStatus.BindVars(data.GetAnswer()));
-            feedbackList.Add(GameStatus.BindVars(data.GetAnswerFeedback()));
+            feedbackList.Add(GameStatus.BindVars(data.getAnswerFeedback()));
         }
 
         Debug.Log("あなたの平均スコアは" + userAverageScore + "でした");
@@ -79,29 +81,32 @@ public class ResultSceneManager : MonoBehaviour
         ResultText.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, 406), new Vector2(2000.0f, 406));
         FeedbackButton.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, 356), new Vector2(2000.0f, 356));
         pageNum = 0;
-        PageNum.text = (pageNum+1).ToString();
-        FeedbackText1.text = questionList[pageNum]+"\n"+userAnswerList[pageNum]+"\n"+feedbackList[pageNum];
+        PageNum.text = (pageNum/2+1).ToString();
+        FeedbackText1_1.text = "質問："+questionList[pageNum]+"\nあなたの回答："+userAnswerList[pageNum]+"\n\nフィードバック\n"+feedbackList[pageNum];
+        FeedbackText1_2.text = "質問：" + questionList[pageNum + 1] + "\nあなたの回答：" + userAnswerList[pageNum + 1] + "\n\nフィードバック\n" + feedbackList[pageNum + 1];
         DownButton.interactable = true;
     }
     public void OnClickUpButton()
     {
         if (pageNum > 0)
         {
-            pageNum--;
+            pageNum -= 2;
             if (pageNum % 2 == 0)
             {
                 Panel1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, outsideY), new Vector2(centerX, centerY));
                 Panel2.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, centerY), new Vector2(centerX, -outsideY));
-                FeedbackText1.text = questionList[pageNum] + "\n" + userAnswerList[pageNum] + "\n" + feedbackList[pageNum];
+                FeedbackText1_1.text = "質問：" + questionList[pageNum] + "\nあなたの回答：" + userAnswerList[pageNum] + "\n\nフィードバック\n" + feedbackList[pageNum];
+                FeedbackText1_2.text = "質問：" + questionList[pageNum + 1] + "\nあなたの回答：" + userAnswerList[pageNum + 1] + "\n\nフィードバック\n" + feedbackList[pageNum + 1];
             }
             else
             {
                 Panel1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, centerY), new Vector2(centerX, -outsideY));
                 Panel2.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, outsideY), new Vector2(centerX, centerY));
-                FeedbackText2.text = questionList[pageNum] + "\n" + userAnswerList[pageNum] + "\n" + feedbackList[pageNum];
+                FeedbackText2_1.text = "質問：" + questionList[pageNum] + "\nあなたの回答：" + userAnswerList[pageNum] + "\n\nフィードバック\n" + feedbackList[pageNum];
+                FeedbackText2_2.text = "質問：" + questionList[pageNum + 1] + "\nあなたの回答：" + userAnswerList[pageNum + 1] + "\n\nフィードバック\n" + feedbackList[pageNum + 1];
             }
             DownButton.interactable = true;
-            PageNum.text = (pageNum+1).ToString();
+            PageNum.text = (pageNum/2+1).ToString();
 
         }
         if (pageNum == 0)
@@ -113,24 +118,26 @@ public class ResultSceneManager : MonoBehaviour
     {
         if (pageNum < feedbackTotal)
         {
-            pageNum++;
+            pageNum += 2;
             if (pageNum % 2 == 0)
             {
 
                 Panel1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, -outsideY), new Vector2(centerX, centerY));
                 Panel2.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, centerY), new Vector2(centerX, outsideY));
-                FeedbackText1.text = questionList[pageNum] + "\n" + userAnswerList[pageNum] + "\n" + feedbackList[pageNum];
+                FeedbackText1_1.text = "質問：" + questionList[pageNum] + "\nあなたの回答：" + userAnswerList[pageNum] + "\n\nフィードバック\n" + feedbackList[pageNum];
+                FeedbackText1_2.text = "質問：" + questionList[pageNum + 1] + "\nあなたの回答：" + userAnswerList[pageNum + 1] + "\n\nフィードバック\n" + feedbackList[pageNum + 1];
             }
             else
             {
                 Panel1.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, centerY), new Vector2(centerX, outsideY));
                 Panel2.GetComponent<FeedbackScroll>().startTrans(new Vector2(centerX, -outsideY), new Vector2(centerX, centerY));
-                FeedbackText2.text = questionList[pageNum] + "\n" + userAnswerList[pageNum] + "\n" + feedbackList[pageNum];
+                FeedbackText2_1.text = "質問：" + questionList[pageNum] + "\nあなたの回答：" + userAnswerList[pageNum] + "\n\nフィードバック\n" + feedbackList[pageNum];
+                FeedbackText2_2.text = "質問：" + questionList[pageNum + 1] + "\nあなたの回答：" + userAnswerList[pageNum + 1] + "\n\nフィードバック\n" + feedbackList[pageNum + 1];
             }
             UpButton.interactable = true;
-            PageNum.text = (pageNum+1).ToString();
+            PageNum.text = (pageNum/2+1).ToString();
         }
-        if(pageNum == feedbackTotal-1)
+        if(pageNum <= feedbackTotal-1)
         {
             DownButton.interactable = false;
         }

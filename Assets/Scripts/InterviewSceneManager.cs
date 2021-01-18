@@ -35,10 +35,7 @@ public class InterviewSceneManager : MonoBehaviour
                 0,
                 100,
             },
-            new List<string>() {
-                "正しい名前を答えましょう。",
-                "正解です、正しい名前を答えましょう。"
-            }
+            "落ち着いてはっきりと自分の氏名を伝えましょう"
         );
 
         commands.Add(new Message("本日は株式会社一般の面接にお越しいただきましてありがとうございます。"));
