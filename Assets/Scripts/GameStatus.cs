@@ -68,6 +68,10 @@ public static class GameStatus
                                     return GameStatus.BindVars(
                                         GameStatus.questionDic[qName].GetAnswer()
                                     );
+                                case "answerFeedback":
+                                    return GameStatus.BindVars(
+                                        GameStatus.questionDic[qName].getAnswerFeedback()
+                                    );
                                 // case "correct":
                                 //     return GameStatus.BindVars(
                                 //         GameStatus.questionDic[qName].GetCorrectAnswer()
