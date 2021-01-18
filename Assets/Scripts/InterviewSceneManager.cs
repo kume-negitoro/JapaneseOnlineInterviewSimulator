@@ -24,61 +24,48 @@ public class InterviewSceneManager : MonoBehaviour
     void Start()
     {
         Screen.SetResolution(1280, 720, false, 60);
+        
+        commands.Add(new Exec(new Message("本日は株式会社一般の面接にお越しいただきましてありがとうございます。")));
+        commands.Add(new Voice("honjitsu"));
+        commands.Add(new Exec(new Message("面接を担当いたします、人事の「大鳥こはく」と申します。")));
+        commands.Add(new Voice("kohakudesu"));
 
-        QuestionData firstQuestion = new QuestionData(
-            "あなたの名前は？",
-            new List<string>() {
-                "大鳥こはく",
-                "${playerName}"
-            },
-            new List<int>() {
-                0,
-                100,
-            },
-            "落ち着いてはっきりと自分の氏名を伝えましょう"
-        );
-
-        commands.Add(new Audio("honjitsu"));
-        commands.Add(new Message("本日は株式会社一般の面接にお越しいただきましてありがとうございます。"));
-        commands.Add(new Audio("kohakudesu"));
-        commands.Add(new Message("面接を担当いたします、人事の「大鳥こはく」と申します。"));
-
-        commands.Add(new Audio("jikosyoukai"));
-        commands.Add(new Message("でははじめに、自己紹介をお願いします。"));
+        commands.Add(new Exec(new Message("でははじめに、自己紹介をお願いします。")));
+        commands.Add(new Voice("jikosyoukai"));
         commands.Add(Question.ByKey("what_is_your_name"));
         commands.Add(Face.ByKey("what_is_your_name"));
-        commands.Add(new Lazy<Message>(() => {
+        commands.Add(new Lazy(() => {
             int score = GameStatus.questionDic["what_is_your_name"].GetScore();
             if(score >= 50)
             {
-                new Audio("arigatou").Execute(this);
-                return new Message("はい、ありがとうございます。");
+                StartCoroutine(new Message("はい、ありがとうございます。").Execute(this));
+                return new Voice("arigatou");
             }
             else
             {
-                new Audio("anatanomnamaedesu").Execute(this);
-                return new Message("えっと、あなたの名前を聞いているんですが...");
+                StartCoroutine(new Message("えっと、あなたの名前を聞いているんですが...").Execute(this));
+                return new Voice("anatanonamaedesu");
             }
         }));
 
-        commands.Add(new Audio("did_you_sleep_well"));
-        commands.Add(new Message("${did_you_sleep_well}"));
+        commands.Add(new Exec(new Message("${did_you_sleep_well}")));
+        commands.Add(new Voice("did_you_sleep_well"));
         commands.Add(Question.ByKey("did_you_sleep_well"));
-        commands.Add(new Audio("naruhodo"));
-        commands.Add(new Message("なるほどですね"));
+        commands.Add(new Exec(new Message("なるほどですね")));
+        commands.Add(new Voice("naruhodo"));
 
-        commands.Add(new Audio("tuginositumon"));
-        commands.Add(new Message("では次の質問です。"));
+        commands.Add(new Exec(new Message("では次の質問です。")));
+        commands.Add(new Voice("tuginositumon"));
 
-        commands.Add(new Audio("you_have_dark_personality"));
-        commands.Add(new Message("${you_have_dark_personality}"));
+        commands.Add(new Exec(new Message("${you_have_dark_personality}")));
+        commands.Add(new Voice("you_have_dark_personality"));
         commands.Add(Question.ByKey("you_have_dark_personality"));
         commands.Add(Face.ByKey("you_have_dark_personality"));
-        commands.Add(new Audio("naruhodoarigatou"));
-        commands.Add(new Message("なるほど、ありがとうございます。"));
+        commands.Add(new Exec(new Message("なるほど、ありがとうございます。")));
+        commands.Add(new Voice("naruhodoarigatou"));
 
-        commands.Add(new Audio("mensetuhaijoudesu"));
-        commands.Add(new Message("では面接は以上になります。本日はありがとうございました。"));
+        commands.Add(new Exec(new Message("では面接は以上になります。本日はありがとうございました。")));
+        commands.Add(new Voice("mensetuhaijoudesu"));
 
         StartCoroutine(Message());
     }

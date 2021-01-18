@@ -7,6 +7,7 @@ using UnityChan;
 public enum Action
 {
     Lazy,
+    Exec,
     Message,
     Question,
     Input,
@@ -33,12 +34,11 @@ public class ScriptCommand
     }
 }
 
-public class Lazy<CommandType> : ScriptCommand
-    where CommandType : ScriptCommand
+public class Lazy: ScriptCommand
 {
-    public System.Func<CommandType> func;
+    public System.Func<ScriptCommand> func;
 
-    public Lazy(System.Func<CommandType> func) : base(Action.Lazy, "Lazy")
+    public Lazy(System.Func<ScriptCommand> func) : base(Action.Lazy, "Lazy")
     {
         this.func = func;
     }
@@ -46,6 +46,23 @@ public class Lazy<CommandType> : ScriptCommand
     override public IEnumerator Execute(InterviewSceneManager manager)
     {
         yield return this.func().Execute(manager);
+    }
+}
+
+public class Exec : ScriptCommand
+{
+    public ScriptCommand command;
+
+    public Exec(ScriptCommand command) : base(Action.Exec, "Exec")
+    {
+        this.command = command;
+    }
+
+    override public IEnumerator Execute(InterviewSceneManager manager)
+    {
+        IEnumerator e = this.command.Execute(manager);
+        while(e.MoveNext() && e.Current != null);
+        yield return null;
     }
 }
 
@@ -147,9 +164,9 @@ public class Face : ScriptCommand
         yield return null;
     }
 
-    public static Lazy<Face> ByKey(string key)
+    public static Lazy ByKey(string key)
     {
-        return new Lazy<Face>(() => {
+        return new Lazy(() => {
             int score = GameStatus.questionDic[key].GetScore();
             Debug.Log(score);
             if(score >= 50) return new Face("default@unitychan");
